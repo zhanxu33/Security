@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>some</title>
+</head>
+<body>
+  <input type="text" id="web">
+  <div class="box"></div>
+  <button id="add">添加图片</button>
+  <script>
+    const input = document.querySelector('#web')
+    const add = document.querySelector('#add')
+    const box = document.querySelector('.box')
+    // 不基于后端 DOM-Based 修改属性 插入内容
+    // 在改变结构后，会造成攻击
+    // 攻击的内容，xss payload 比如这里输入 ""><script>alert(2)<\/script>"
+    add.onclick = function () {
+      // 这种src的使用encodeUri 转义
+      box.innerHTML = `<img src=${encodeURI(input.value)}>`
+    }
+  </script>
+</body>
+</html>

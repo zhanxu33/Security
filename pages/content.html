@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>content</title>
+</head>
+<body>
+  <div id="content"></div>
+  <input type="text" id="a">
+  <button id="add">添加</button>
+  <script>
+    const add = document.querySelector('#add')
+    const input = document.querySelector('#a')
+
+    function getContent() {
+      var xhr = new XMLHttpRequest()
+      xhr.open('get', '/api/list')
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+      xhr.onload = function() {
+        const res = xhr.responseText
+        const content = document.querySelector('#content')
+        content.innerText = JSON.parse(res).comments.map(x => x.content).join('|')
+      }
+      xhr.send(null)
+    }
+
+    add.onclick = function() {
+      var xhr = new XMLHttpRequest()
+      xhr.open('post', '/api/addContent')
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+      xhr.onload = function() {
+        getContent()
+      }
+      xhr.send(`content=${input.value}`)
+    }
+    getContent()
+  </script>
+</body>
+</html>

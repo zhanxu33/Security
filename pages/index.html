@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>XSS</title>
+</head>
+<body>
+  <input type="text" name="" id="username" placeholder="username">
+  <input type="text" name="" id="password" placeholder="password">
+  <button onclick="submit()"></button>
+  <script>
+    function submit() {
+      var username = document.querySelector('#username').value
+      var password = document.querySelector('#password').value
+      var xhr = new XMLHttpRequest()
+      xhr.open('post', '/api/login')
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+      xhr.onload = function() {
+        location.href = `/home?type=2`
+      }
+      xhr.send(`username=${username}&password=${password}`)
+    }
+  </script>
+</body>
+</html>
