@@ -32,7 +32,6 @@ app.post('/api/login', function(req, res) {
 // {httpOnly: true}) 前端不能操作cookie,并不能解决XSS，但是可以降低受损的范围
 // 诱导用户自己点开某些链接
 // 查询参数 预防方法，使用encodeURIComponent对输入url encode
-
 app.get('/home', function(req, res) {
   const type = req.query.type
   res.send(`${encodeURIComponent(type)}`)
